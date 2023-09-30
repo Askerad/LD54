@@ -10,4 +10,3 @@ func _process(delta):
 	if(player.position.y < max_height_reached):
 		max_height_reached = player.position.y
 		score = -player.position.y;
-

@@ -16,6 +16,9 @@ enum PlayerStates {
 @export var wall_jump_delay = 2
 #var _airtime: float = 0.0
 
+#var for including the animated sprite
+@onready var _animatedSprite = $AnimatedSprite2D
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -69,6 +72,7 @@ func wall_jump(direction):
 	
 
 func jump_cut():
+	_animatedSprite.play("fall_stable")
 	jump_buffer.stop()
 	if velocity.y < -100:
 			velocity.y = -100
@@ -87,13 +91,23 @@ func _physics_process(delta):
 
 	match state:
 		PlayerStates.Running: 
-			velocity.x = lerp(velocity.x, direction * SPEED, 0.15)
+			if direction:
+				_animatedSprite.play("running")
+				velocity.x = lerp(velocity.x, direction * SPEED, 0.15)
+				if Input.is_action_pressed("left"):
+					_animatedSprite.flip_h = true
+				else:
+					_animatedSprite.flip_h = false
+			else:
+				_animatedSprite.play("idle")
+				velocity.x = lerp(velocity.x, 0.0, 0.2)
 			if Input.is_action_pressed("jump"):
 				if is_on_floor():
 					print("jump classique")
 					jump()
 			
-		PlayerStates.Jumping: 
+		PlayerStates.Jumping:
+			_animatedSprite.play("Jumping")
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
 			
 			if velocity.y > 0:
@@ -118,6 +132,7 @@ func _physics_process(delta):
 			pass
 			
 		PlayerStates.Falling:
+			_animatedSprite.play("falling")
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
 			if Input.is_action_pressed("jump"):
 				jump_buffer.start()

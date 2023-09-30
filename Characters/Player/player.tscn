@@ -1,17 +1,132 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=19 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
-[ext_resource type="Texture2D" uid="uid://cjfk6872xi5sx" path="res://assets/icon.svg" id="2_ekv5t"]
+[ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7sm7p"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52pbw"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixlpa"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0iu4v"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mft37"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lt080"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7byw"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjcrh"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wn0c"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy3gh"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iyori"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3fra"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m22ol"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgk6r"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(80, 16, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v0604"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_ekv5t")
+"texture": SubResource("AtlasTexture_7sm7p")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Jumping",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52pbw")
+}],
+"loop": true,
+"name": &"fall_stable",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixlpa")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0iu4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mft37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lt080")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7byw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hjcrh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wn0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy3gh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iyori")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3fra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m22ol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgk6r")
+}],
+"loop": true,
+"name": &"running",
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd176"]
@@ -26,8 +141,11 @@ wall_jump_timer = NodePath("WallJumpTimer")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
+texture_filter = 1
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_v0604")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
