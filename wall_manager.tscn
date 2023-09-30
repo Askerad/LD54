@@ -26,6 +26,8 @@ offset = Vector2(320, 0)
 flip_h = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="ParallaxBackground/ParallaxLayer/Wall Right"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/ParallaxLayer/Wall Right/StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_dvvce")
@@ -36,6 +38,8 @@ texture = ExtResource("2_tfx4y")
 offset = Vector2(-320, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="ParallaxBackground/ParallaxLayer/Wall Left"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/ParallaxLayer/Wall Left/StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_da4fg")

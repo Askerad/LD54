@@ -8,7 +8,7 @@ enum PlayerStates {
 	Dashing
 }
 
-
+signal player_died
 
 @export var delay = 0.3
 @export var wall_delay = 0.3
@@ -36,6 +36,8 @@ var state: PlayerStates = PlayerStates.Running;
 @onready var dash_time = $DashingTimer
 @onready var wj_ray_right = $WJRayRight
 @onready var wj_ray_left = $WJRayLeft
+@onready var death_ray_right = $DeathRayRight
+@onready var death_ray_left = $DeathRayLeft
 
 func _ready():
 
@@ -84,6 +86,11 @@ func jump_cut():
 			velocity.y = -100
 
 func _physics_process(delta):
+	if death_ray_left.is_colliding() and death_ray_right.is_colliding(): 
+		print("DEAD")
+		emit_signal("player_died")
+	
+	
 	var direction = Input.get_axis("left", "right")
 
 	#Gravity Handling
