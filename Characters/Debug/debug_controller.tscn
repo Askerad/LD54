@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsnuyr0vmv62c"]
+
+[ext_resource type="Script" path="res://levels/DebugController.gd" id="1_37wtx"]
+[ext_resource type="Texture2D" uid="uid://cjfk6872xi5sx" path="res://assets/icon.svg" id="2_6bwxj"]
+[ext_resource type="PackedScene" uid="uid://pffdk3w3fuyk" path="res://wall_manager.tscn" id="3_xrnvh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1vao"]
+radius = 15.0
+
+[node name="DebugController" type="CharacterBody2D"]
+script = ExtResource("1_37wtx")
+speed = 250.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_6bwxj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WallManager" parent="Camera2D" instance=ExtResource("3_xrnvh")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y1vao")

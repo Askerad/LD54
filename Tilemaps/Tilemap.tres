@@ -6,6 +6,7 @@
 texture = ExtResource("1_peko2")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+0:0/0/terrain_set = 1
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 1:0/0 = 0
@@ -271,6 +272,7 @@ texture_region_size = Vector2i(32, 32)
 6:3/0/terrains_peering_bit/top_side = 0
 7:3/0 = 0
 7:3/0/terrain_set = 0
+7:3/0/terrain = 0
 7:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 7:3/0/physics_layer_0/angular_velocity = 0.0
 7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)

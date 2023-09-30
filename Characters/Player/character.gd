@@ -82,14 +82,14 @@ func _physics_process(delta):
 		if !Jump_buffer.is_stopped():
 			Jump_buffer.stop()
 			jump()
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_released("jump"):
 		jump_cut()
 	# Handle Jump.
 			
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("left", "right")
 	if direction and wall_jumped == 0:
 		wall_jumped = 1
 		velocity.x = lerp(velocity.x, direction * SPEED, 0.15)

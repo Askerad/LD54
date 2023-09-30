@@ -4,9 +4,9 @@ extends Node2D
 
 var parts : Array[PackedScene] = [
 	preload("res://levels/parts/part1.tscn"),
-	preload("res://levels/parts/part2.tscn"),
+#	preload("res://levels/parts/part2.tscn"),
 	# preload("res://levels/parts/part3.tscn"),
-	preload("res://levels/parts/part4.tscn"),
+#	preload("res://levels/parts/part4.tscn"),
 ];
 var rng = RandomNumberGenerator.new();
 
@@ -36,11 +36,11 @@ func clean_used_levels():
 		
 	
 func load_next_level():
-	var last_part = currently_loaded_parts[0] if currently_loaded_parts.size() else parts[1].instantiate();
+	var last_part = currently_loaded_parts[0] if currently_loaded_parts.size() else parts[0].instantiate();
 	var part_prefab: PackedScene = pick_random_level_part();
 	var part : Part = part_prefab.instantiate();
 	
-	part.position.y = last_part.position.y - last_part.height * 16
+	part.position.y = last_part.position.y - last_part.height * 32
 	
 	currently_loaded_parts.push_front(part);
 	add_child(part);

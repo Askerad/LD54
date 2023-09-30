@@ -18,14 +18,16 @@ animations = [{
 size = Vector2(129, 129)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-position = Vector2(64, 64)
+position = Vector2(0, -16)
 script = ExtResource("1_6dwht")
 JUMP_VELOCITY = -600.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_v0604")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_yd176")

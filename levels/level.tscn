@@ -1,61 +1,26 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs857txywttq7"]
+[gd_scene load_steps=6 format=3 uid="uid://cs857txywttq7"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_ewje7"]
 [ext_resource type="Script" path="res://levels/LoadingManager.gd" id="2_ju7ym"]
-[ext_resource type="Script" path="res://levels/DebugController.gd" id="3_m3hmi"]
-[ext_resource type="Texture2D" uid="uid://cjfk6872xi5sx" path="res://assets/icon.svg" id="4_vo7m3"]
-[ext_resource type="Script" path="res://levels/WallManager.gd" id="5_far6t"]
-[ext_resource type="Texture2D" uid="uid://bwbj60ugn1vko" path="res://assets/dev/wall/wall.png" id="5_infhe"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_da4fg"]
-normal = Vector2(1, 0)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dvvce"]
-normal = Vector2(-1, 0)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_y1vao"]
-radius = 15.0
+[ext_resource type="PackedScene" uid="uid://bwkepyp35k2f2" path="res://Characters/Player/player.tscn" id="3_fxhom"]
+[ext_resource type="Script" path="res://levels/Trailing Camera.gd" id="4_lpwh4"]
+[ext_resource type="PackedScene" uid="uid://pffdk3w3fuyk" path="res://wall_manager.tscn" id="5_epft5"]
 
 [node name="level" type="Node2D"]
-position = Vector2(618, 344)
+texture_filter = 1
+position = Vector2(640, 360)
 script = ExtResource("1_ewje7")
 
 [node name="LoadingManager" type="Node2D" parent="."]
+position = Vector2(0, 360)
 script = ExtResource("2_ju7ym")
 
-[node name="DebugController" type="CharacterBody2D" parent="."]
-script = ExtResource("3_m3hmi")
-speed = 250.0
+[node name="CharacterBody2D" parent="." instance=ExtResource("3_fxhom")]
+position = Vector2(0, 280)
+JUMP_VELOCITY = -450.0
 
-[node name="Sprite2D" type="Sprite2D" parent="DebugController"]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_vo7m3")
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("4_lpwh4")
+target = NodePath("../CharacterBody2D")
 
-[node name="Camera2D" type="Camera2D" parent="DebugController"]
-
-[node name="WallManager" type="Node2D" parent="DebugController/Camera2D"]
-script = ExtResource("5_far6t")
-
-[node name="Wall Left" type="Sprite2D" parent="DebugController/Camera2D/WallManager"]
-position = Vector2(-239, 0)
-texture = ExtResource("5_infhe")
-offset = Vector2(-320, 0)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="DebugController/Camera2D/WallManager/Wall Left"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController/Camera2D/WallManager/Wall Left/StaticBody2D"]
-shape = SubResource("WorldBoundaryShape2D_da4fg")
-
-[node name="Wall Right" type="Sprite2D" parent="DebugController/Camera2D/WallManager"]
-position = Vector2(384, 0)
-texture = ExtResource("5_infhe")
-offset = Vector2(320, 0)
-flip_h = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="DebugController/Camera2D/WallManager/Wall Right"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController/Camera2D/WallManager/Wall Right/StaticBody2D"]
-shape = SubResource("WorldBoundaryShape2D_dvvce")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController"]
-shape = SubResource("CircleShape2D_y1vao")
+[node name="WallManager" parent="." instance=ExtResource("5_epft5")]
