@@ -1,7 +1,36 @@
-[gd_scene load_steps=19 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=24 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
 [ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
+[ext_resource type="Texture2D" uid="uid://dihijj02febsr" path="res://assets/vfx/sprint.png" id="2_3578t"]
+
+[sub_resource type="Gradient" id="Gradient_78hxg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y1uho"]
+gradient = SubResource("Gradient_78hxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_imv6q"]
+lifetime_randomness = 0.33
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 27.8
+gravity = Vector3(0, -10, 0)
+initial_velocity_min = 64.59
+initial_velocity_max = 107.54
+angular_velocity_min = 18.34
+angular_velocity_max = 146.76
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_min = -348.5
+angle_max = 229.3
+scale_min = 2.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_y1uho")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gn86n"]
+atlas = ExtResource("2_3578t")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7sm7p"]
 atlas = ExtResource("2_2ceru")
@@ -139,6 +168,14 @@ SPEED = 400.0
 JUMP_VELOCITY = -450.0
 wall_jump_timer = NodePath("WallJumpTimer")
 metadata/_edit_group_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 16)
+rotation = -3.14159
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_imv6q")
+texture = SubResource("AtlasTexture_gn86n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

@@ -92,13 +92,17 @@ func _physics_process(delta):
 	match state:
 		PlayerStates.Running: 
 			if direction:
+				$GPUParticles2D.emitting = true;
 				_animatedSprite.play("running")
 				velocity.x = lerp(velocity.x, direction * SPEED, 0.15)
 				if Input.is_action_pressed("left"):
 					_animatedSprite.flip_h = true
+					$GPUParticles2D.rotation_degrees= 0;
 				else:
 					_animatedSprite.flip_h = false
+					$GPUParticles2D.rotation_degrees= 180;
 			else:
+				$GPUParticles2D.emitting = false;
 				_animatedSprite.play("idle")
 				velocity.x = lerp(velocity.x, 0.0, 0.2)
 			if Input.is_action_pressed("jump"):
@@ -107,6 +111,8 @@ func _physics_process(delta):
 					jump()
 			
 		PlayerStates.Jumping:
+			$GPUParticles2D.emitting = false;
+			
 			_animatedSprite.play("Jumping")
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
 			
@@ -132,6 +138,7 @@ func _physics_process(delta):
 			pass
 			
 		PlayerStates.Falling:
+			$GPUParticles2D.emitting = false;
 			_animatedSprite.play("falling")
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
 			if Input.is_action_pressed("jump"):
@@ -147,6 +154,7 @@ func _physics_process(delta):
 				state = PlayerStates.Running
 		
 		PlayerStates.Walljumping:
+			$GPUParticles2D.emitting = false;
 			if wall_jump_timer.is_stopped():
 				state = PlayerStates.Falling
 				

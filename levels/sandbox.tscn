@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6o703hu1wed4"]
+[gd_scene load_steps=3 format=3 uid="uid://bhdeecugfjd04"]
 
 [ext_resource type="TileSet" uid="uid://qkdo7vao52g6" path="res://Tilemaps/Tilemap.tres" id="1_4sdvv"]
 [ext_resource type="PackedScene" uid="uid://bwkepyp35k2f2" path="res://Characters/Player/player.tscn" id="2_sx047"]
@@ -14,4 +14,3 @@ layer_0/tile_data = PackedInt32Array(65531, 0, 1, 65532, 65536, 1, 65533, 65536,
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_sx047")]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
-JUMP_VELOCITY = -450.0

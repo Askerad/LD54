@@ -4,9 +4,9 @@ extends Node2D
 
 var parts : Array[PackedScene] = [
 	preload("res://levels/parts/part1.tscn"),
-#	preload("res://levels/parts/part2.tscn"),
-	# preload("res://levels/parts/part3.tscn"),
-#	preload("res://levels/parts/part4.tscn"),
+	preload("res://levels/parts/part2.tscn"),
+	preload("res://levels/parts/part3.tscn"),
+	preload("res://levels/parts/part4.tscn"),
 ];
 var rng = RandomNumberGenerator.new();
 

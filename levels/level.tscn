@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bwkepyp35k2f2" path="res://Characters/Player/player.tscn" id="3_fxhom"]
 [ext_resource type="Script" path="res://levels/Trailing Camera.gd" id="4_lpwh4"]
 [ext_resource type="PackedScene" uid="uid://pffdk3w3fuyk" path="res://wall_manager.tscn" id="5_epft5"]
-[ext_resource type="Theme" path="res://UITheme.tres" id="6_2g68s"]
+[ext_resource type="Theme" uid="uid://d18fwmx6upccw" path="res://UITheme.tres" id="6_2g68s"]
 [ext_resource type="Script" path="res://levels/Label.gd" id="6_50hv7"]
 [ext_resource type="Script" path="res://levels/ScoreManager.gd" id="7_vqgtj"]
 
@@ -49,5 +49,6 @@ position = Vector2(0, 720)
 rotation = 1.88146
 speed = 25.0
 
-[node name="ScoreManager" type="Node" parent="."]
+[node name="ScoreManager" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("7_vqgtj")
+player = NodePath("../CharacterBody2D")
