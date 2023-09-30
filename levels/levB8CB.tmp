@@ -7,14 +7,14 @@
 [ext_resource type="Script" path="res://levels/WallManager.gd" id="5_far6t"]
 [ext_resource type="Texture2D" uid="uid://bwbj60ugn1vko" path="res://assets/dev/wall/wall.png" id="5_infhe"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1vao"]
+radius = 15.0
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_da4fg"]
 normal = Vector2(1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dvvce"]
 normal = Vector2(-1, 0)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_y1vao"]
-radius = 15.0
 
 [node name="level" type="Node2D"]
 position = Vector2(618, 344)
@@ -33,29 +33,29 @@ texture = ExtResource("4_vo7m3")
 
 [node name="Camera2D" type="Camera2D" parent="DebugController"]
 
-[node name="WallManager" type="Node2D" parent="DebugController/Camera2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController"]
+shape = SubResource("CircleShape2D_y1vao")
+
+[node name="WallManager" type="Node2D" parent="."]
 script = ExtResource("5_far6t")
 
-[node name="Wall Left" type="Sprite2D" parent="DebugController/Camera2D/WallManager"]
+[node name="Wall Left" type="Sprite2D" parent="WallManager"]
 position = Vector2(-239, 0)
 texture = ExtResource("5_infhe")
 offset = Vector2(-320, 0)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="DebugController/Camera2D/WallManager/Wall Left"]
+[node name="StaticBody2D" type="StaticBody2D" parent="WallManager/Wall Left"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController/Camera2D/WallManager/Wall Left/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallManager/Wall Left/StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_da4fg")
 
-[node name="Wall Right" type="Sprite2D" parent="DebugController/Camera2D/WallManager"]
+[node name="Wall Right" type="Sprite2D" parent="WallManager"]
 position = Vector2(384, 0)
 texture = ExtResource("5_infhe")
 offset = Vector2(320, 0)
 flip_h = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="DebugController/Camera2D/WallManager/Wall Right"]
+[node name="StaticBody2D" type="StaticBody2D" parent="WallManager/Wall Right"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController/Camera2D/WallManager/Wall Right/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallManager/Wall Right/StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_dvvce")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController"]
-shape = SubResource("CircleShape2D_y1vao")
