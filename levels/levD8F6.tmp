@@ -14,6 +14,7 @@ script = ExtResource("1_ewje7")
 
 [node name="LoadingManager" type="Node2D" parent="."]
 script = ExtResource("2_ju7ym")
+loaded_levels_count = null
 
 [node name="DebugController" type="CharacterBody2D" parent="."]
 script = ExtResource("3_m3hmi")
