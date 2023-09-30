@@ -24,3 +24,6 @@ script = ExtResource("4_lpwh4")
 target = NodePath("../CharacterBody2D")
 
 [node name="WallManager" parent="." instance=ExtResource("5_epft5")]
+position = Vector2(0, 720)
+rotation = 1.88146
+speed = 25.0
