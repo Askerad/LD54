@@ -16,6 +16,7 @@ func calculate_bounds():
 
 
 func _on_loading_zone_body_entered(body):
-	emit_signal("loading_zone_entered")
-	$LoadingZone.queue_free()
+	if body is CharacterBody2D: 
+		emit_signal("loading_zone_entered")
+		$LoadingZone.queue_free()
 	pass # Replace with function body.
