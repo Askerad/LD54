@@ -4,7 +4,8 @@ enum PlayerStates {
 	Running,
 	Jumping,
 	Falling,
-	Walljumping
+	Walljumping,
+	Dashing
 }
 
 
@@ -22,6 +23,7 @@ enum PlayerStates {
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var can_dash = 1
 
 var wall_grabbed = 0
 var wall_jumped = 0
@@ -31,6 +33,7 @@ var wall_stance_timer = null
 var state: PlayerStates = PlayerStates.Running;
 @onready var minimum_jump_timer = $MinimumJumpTimer
 @onready var jump_buffer = $JumpBufferTimer
+@onready var dash_time = $DashingTimer
 @onready var wj_ray_right = $WJRayRight
 @onready var wj_ray_left = $WJRayLeft
 
@@ -45,6 +48,10 @@ func _ready():
 #	wall_jump_timer.one_shot = true
 #	wall_jump_timer.wait_time= wall_jump_delay
 #	add_child(wall_jump_timer)
+
+func dashing(direction):
+	dash_time.start()
+	state = PlayerStates.Dashing
 	
 func jump():
 		minimum_jump_timer.start();
@@ -89,6 +96,9 @@ func _physics_process(delta):
 
 	match state:
 		PlayerStates.Running: 
+			if can_dash == 0:
+				can_dash = 1
+			print(_animatedSprite.is_flipped_h())
 			if direction:
 				$GPUParticles2D.emitting = true;
 				_animatedSprite.play("running")
@@ -105,8 +115,11 @@ func _physics_process(delta):
 				velocity.x = lerp(velocity.x, 0.0, 0.2)
 			if Input.is_action_pressed("jump"):
 				if is_on_floor():
-					print("jump classique")
+					#print("jump classique")
 					jump()
+			if Input.is_action_just_pressed("dash") and can_dash == 1:
+				can_dash = 0
+				dashing(direction)
 			
 		PlayerStates.Jumping:
 			$GPUParticles2D.emitting = false;
@@ -119,12 +132,12 @@ func _physics_process(delta):
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
 			
 			if velocity.y > 0:
-				print("FALLING")
+				#print("FALLING")
 				jump_cut();
 				state = PlayerStates.Falling
 				
 			if not minimum_jump_timer.time_left and not Input.is_action_pressed("jump"):
-				print("CUT")
+				#print("CUT")
 				jump_cut();
 				state = PlayerStates.Falling
 				
@@ -138,6 +151,9 @@ func _physics_process(delta):
 			
 			if is_on_floor() and not jump_buffer.time_left: 
 				state = PlayerStates.Running
+			if Input.is_action_just_pressed("dash") and can_dash == 1:
+				can_dash = 0
+				dashing(direction)
 			pass
 			
 		PlayerStates.Falling:
@@ -165,6 +181,9 @@ func _physics_process(delta):
 			
 			if is_on_floor() and not jump_buffer.time_left: 
 				state = PlayerStates.Running
+			if Input.is_action_just_pressed("dash") and can_dash == 1:
+				can_dash = 0
+				dashing(direction)
 		
 		PlayerStates.Walljumping:
 			$GPUParticles2D.emitting = false;
@@ -174,7 +193,19 @@ func _physics_process(delta):
 			if is_on_floor() and not jump_buffer.time_left: 
 				state = PlayerStates.Running
 			
-			
+		PlayerStates.Dashing:
+			velocity.y = 0
+			if _animatedSprite.is_flipped_h():
+				velocity.x = -1000
+			else:
+				velocity.x = 1000
+			print(velocity.x)
+			print (dash_time.time_left)
+			if dash_time.is_stopped() and is_on_floor():
+				can_dash = 1
+				state = PlayerStates.Running
+			if dash_time.is_stopped() and !is_on_floor():
+				state = PlayerStates.Falling
 			
 
 	move_and_slide()
