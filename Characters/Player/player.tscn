@@ -17,10 +17,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd176"]
 size = Vector2(129, 129)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("wall_jump_timer")]
 position = Vector2(0, -16)
 script = ExtResource("1_6dwht")
-JUMP_VELOCITY = -600.0
+SPEED = 400.0
+JUMP_VELOCITY = -450.0
+wall_jump_timer = NodePath("WallJumpTimer")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -31,3 +33,22 @@ sprite_frames = SubResource("SpriteFrames_v0604")
 position = Vector2(-0.5, 0.5)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_yd176")
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="WallJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="MinimumJumpTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.05
+one_shot = true
+
+[node name="WJRayRight" type="RayCast2D" parent="."]
+target_position = Vector2(40, 0)
+
+[node name="WJRayLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-40, 0)
