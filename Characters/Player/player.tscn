@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=24 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
 [ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
@@ -27,10 +27,6 @@ angle_max = 229.3
 scale_min = 2.0
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_y1uho")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gn86n"]
-atlas = ExtResource("2_3578t")
-region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7sm7p"]
 atlas = ExtResource("2_2ceru")
@@ -183,11 +179,12 @@ metadata/_edit_group_ = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 texture_filter = 1
-position = Vector2(0, 16)
+position = Vector2(-2.885, 8.38)
 rotation = -3.14159
+emitting = false
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_imv6q")
-texture = SubResource("AtlasTexture_gn86n")
+texture = ExtResource("2_3578t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
