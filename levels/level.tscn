@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cs857txywttq7"]
+[gd_scene load_steps=12 format=3 uid="uid://cs857txywttq7"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_ewje7"]
 [ext_resource type="Script" path="res://levels/LoadingManager.gd" id="2_ju7ym"]
@@ -7,7 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://pffdk3w3fuyk" path="res://wall_manager.tscn" id="5_epft5"]
 [ext_resource type="Theme" uid="uid://d18fwmx6upccw" path="res://UITheme.tres" id="6_2g68s"]
 [ext_resource type="Script" path="res://levels/Label.gd" id="6_50hv7"]
+[ext_resource type="Texture2D" uid="uid://b5md7j2v6insp" path="res://assets/ui/ninerect.png" id="7_be044"]
 [ext_resource type="Script" path="res://levels/ScoreManager.gd" id="7_vqgtj"]
+[ext_resource type="FontFile" uid="uid://dvn0jky26ws8p" path="res://assets/fonts/Kenney Rocket Square.ttf" id="9_dy05l"]
+[ext_resource type="Texture2D" uid="uid://bksaw334o77tq" path="res://assets/vfx/fondnoir.png" id="9_r6mpr"]
 
 [node name="level" type="Node2D"]
 texture_filter = 1
@@ -17,6 +20,11 @@ script = ExtResource("1_ewje7")
 [node name="LoadingManager" type="Node2D" parent="."]
 position = Vector2(0, 360)
 script = ExtResource("2_ju7ym")
+
+[node name="WallManager" parent="." instance=ExtResource("5_epft5")]
+position = Vector2(-224, 800)
+rotation = 1.88146
+speed = 25.0
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_fxhom")]
 position = Vector2(0, 280)
@@ -44,11 +52,55 @@ text = "36040"
 script = ExtResource("6_50hv7")
 scoreManager = NodePath("../../../../ScoreManager")
 
-[node name="WallManager" parent="." instance=ExtResource("5_epft5")]
-position = Vector2(0, 720)
-rotation = 1.88146
-speed = 25.0
+[node name="GameOverScreen" type="CanvasLayer" parent="CharacterBody2D/Camera2D/UiCanvas"]
+layer = 128
+visible = false
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="Fondnoir" type="Sprite2D" parent="CharacterBody2D/Camera2D/UiCanvas/GameOverScreen"]
+modulate = Color(1, 1, 1, 0.560784)
+position = Vector2(640, 360)
+texture = ExtResource("9_r6mpr")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CharacterBody2D/Camera2D/UiCanvas/GameOverScreen"]
+offset_left = 184.0
+offset_top = 132.0
+offset_right = 456.0
+offset_bottom = 220.0
+texture = ExtResource("7_be044")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Label2" type="Label" parent="CharacterBody2D/Camera2D/UiCanvas/GameOverScreen/NinePatchRect" node_paths=PackedStringArray("scoreManager")]
+texture_filter = 1
+offset_left = 12.0
+offset_top = 40.0
+offset_right = 212.0
+offset_bottom = 93.0
+theme = ExtResource("6_2g68s")
+theme_override_font_sizes/font_size = 32
+text = "36040"
+script = ExtResource("6_50hv7")
+scoreManager = NodePath("../../../../../../ScoreManager")
+
+[node name="Button" type="Button" parent="CharacterBody2D/Camera2D/UiCanvas/GameOverScreen/NinePatchRect"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 184.0
+offset_top = 52.0
+offset_right = 262.0
+offset_bottom = 73.0
+theme_override_fonts/font = ExtResource("9_dy05l")
+theme_override_font_sizes/font_size = 10
+text = "RESTART"
 
 [node name="ScoreManager" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("7_vqgtj")
 player = NodePath("../CharacterBody2D")
+
+[connection signal="pressed" from="CharacterBody2D/Camera2D/UiCanvas/GameOverScreen/NinePatchRect/Button" to="." method="_on_restart_button_pressed"]

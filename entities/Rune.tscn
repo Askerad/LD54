@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://b51gr88p8b0sl"]
+
+[ext_resource type="Script" path="res://entities/Rune.gd" id="1_cc0nw"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/rune.png" id="2_ek7ou"]
+[ext_resource type="Texture2D" uid="uid://1vxunqg7uds8" path="res://assets/vfx/shine.png" id="2_lmmm2"]
+[ext_resource type="Texture2D" uid="uid://bbol7q0160jxx" path="res://assets/vfx/Glow+Shine.png" id="3_6siud"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kykev"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_q4mhy"]
+_data = [Vector2(0.0171821, 0), 0.0, 0.0, 0, 0, Vector2(0.271478, 0.610526), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_n0ill"]
+curve = SubResource("Curve_q4mhy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sq2sl"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+angular_velocity_min = -45.86
+angular_velocity_max = 36.69
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.2
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_n0ill")
+color = Color(1, 0.968627, 0.435294, 0.101961)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_70n2u"]
+radius = 14.0357
+
+[node name="Rune" type="Node2D"]
+script = ExtResource("1_cc0nw")
+effect_size = 150.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_kykev")
+amount = 6
+process_material = SubResource("ParticleProcessMaterial_sq2sl")
+texture = ExtResource("2_lmmm2")
+lifetime = 3.0
+speed_scale = 0.8
+fixed_fps = 60
+collision_base_size = 0.0
+trail_lifetime = 0.01
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_kykev")
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_sq2sl")
+texture = ExtResource("3_6siud")
+lifetime = 3.0
+speed_scale = 0.8
+fixed_fps = 60
+collision_base_size = 0.0
+trail_lifetime = 0.01
+
+[node name="Rune" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_ek7ou")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_70n2u")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_rune_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=25 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
 [ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
@@ -27,6 +27,10 @@ angle_max = 229.3
 scale_min = 2.0
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_y1uho")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gn86n"]
+atlas = ExtResource("2_3578t")
+region = Rect2(0.105614, 0.187847, 7.56731, 7.70244)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7sm7p"]
 atlas = ExtResource("2_2ceru")
@@ -166,8 +170,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yd176"]
-size = Vector2(129, 129)
+[sub_resource type="CircleShape2D" id="CircleShape2D_cavan"]
+radius = 14.5086
 
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("wall_jump_timer")]
 position = Vector2(0, -16)
@@ -179,12 +183,11 @@ metadata/_edit_group_ = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 texture_filter = 1
-position = Vector2(-2.885, 8.38)
+position = Vector2(0, 16)
 rotation = -3.14159
-emitting = false
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_imv6q")
-texture = ExtResource("2_3578t")
+texture = SubResource("AtlasTexture_gn86n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -195,8 +198,7 @@ autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
-scale = Vector2(0.25, 0.25)
-shape = SubResource("RectangleShape2D_yd176")
+shape = SubResource("CircleShape2D_cavan")
 
 [node name="JumpBufferTimer" type="Timer" parent="."]
 wait_time = 0.05

@@ -64,7 +64,6 @@ func wallgrab(direction):
 		#print ("I touched da wall")	
 
 func wall_jump(direction):
-	print("walljump")
 	wall_jumped = 1
 	wall_jump_timer.start()
 	velocity.y = JUMP_VELOCITY
@@ -79,7 +78,6 @@ func jump_cut():
 
 func _physics_process(delta):
 	var direction = Input.get_axis("left", "right")
-	print(state);
 
 	#Gravity Handling
 	if not is_on_floor():

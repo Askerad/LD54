@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1c0caa4dgdqq"]
+[gd_scene load_steps=5 format=3 uid="uid://b1c0caa4dgdqq"]
 
 [ext_resource type="TileSet" uid="uid://qkdo7vao52g6" path="res://Tilemaps/Tilemap.tres" id="1_tani3"]
 [ext_resource type="Script" path="res://levels/parts/TilemapData.gd" id="2_5epv8"]
+[ext_resource type="PackedScene" uid="uid://b51gr88p8b0sl" path="res://entities/Rune.tscn" id="3_4yylv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4s7j"]
 size = Vector2(1280, 96)
 
-[node name="TileMap" type="TileMap"]
+[node name="TileMap2" type="TileMap"]
 tile_set = ExtResource("1_tani3")
 cell_quadrant_size = 32
 format = 2
@@ -18,5 +19,8 @@ script = ExtResource("2_5epv8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LoadingZone"]
 position = Vector2(0, -591)
 shape = SubResource("RectangleShape2D_h4s7j")
+
+[node name="Rune" parent="." instance=ExtResource("3_4yylv")]
+position = Vector2(-72, -64)
 
 [connection signal="body_entered" from="LoadingZone" to="." method="_on_loading_zone_body_entered"]
