@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
-[ext_resource type="Texture2D" uid="uid://cjfk6872xi5sx" path="res://icon.svg" id="2_ekv5t"]
+[ext_resource type="Texture2D" uid="uid://cjfk6872xi5sx" path="res://assets/icon.svg" id="2_ekv5t"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v0604"]
 animations = [{
@@ -20,6 +20,7 @@ size = Vector2(129, 129)
 [node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(64, 64)
 script = ExtResource("1_6dwht")
+JUMP_VELOCITY = -600.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

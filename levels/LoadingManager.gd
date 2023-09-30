@@ -12,7 +12,6 @@ var rng = RandomNumberGenerator.new();
 
 var currently_loaded_parts: Array[Part];
 
-
 func _ready():
 	for i in range(0, int(loaded_levels_count/2)):
 		load_next_level()
