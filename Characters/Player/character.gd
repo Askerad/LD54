@@ -72,7 +72,7 @@ func wall_jump(direction):
 	
 
 func jump_cut():
-	_animatedSprite.play("fall_stable")
+	#_animatedSprite.play("fall_stable")
 	jump_buffer.stop()
 	if velocity.y < -100:
 			velocity.y = -100
@@ -114,6 +114,10 @@ func _physics_process(delta):
 			$GPUParticles2D.emitting = false;
 			
 			_animatedSprite.play("Jumping")
+			if velocity.x <= 0:
+				_animatedSprite.flip_h = true
+			else:
+				_animatedSprite.flip_h = false
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
 			
 			if velocity.y > 0:
@@ -127,6 +131,7 @@ func _physics_process(delta):
 				state = PlayerStates.Falling
 				
 			if is_on_wall() and Input.is_action_just_pressed("jump"):
+				_animatedSprite.flip_h = true
 				wall_jump_timer.start();
 				state = PlayerStates.Walljumping;
 				if wj_ray_left.is_colliding(): wall_jump(-1);
@@ -138,9 +143,19 @@ func _physics_process(delta):
 			pass
 			
 		PlayerStates.Falling:
-			$GPUParticles2D.emitting = false;
 			_animatedSprite.play("falling")
+			$GPUParticles2D.emitting = false;
 			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
+			if velocity.x < 0:
+					_animatedSprite.flip_h = true
+			else:
+				_animatedSprite.flip_h = false
+			
+			if is_on_wall() and !is_on_floor():
+				_animatedSprite.play("wall_grabbing")
+			elif !is_on_wall() and !is_on_floor():
+				_animatedSprite.play("falling")
+			
 			if Input.is_action_pressed("jump"):
 				jump_buffer.start()
 				

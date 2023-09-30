@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=25 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
 [ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
@@ -88,6 +88,10 @@ region = Rect2(64, 16, 16, 16)
 atlas = ExtResource("2_2ceru")
 region = Rect2(80, 16, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2c3a"]
+atlas = ExtResource("2_2ceru")
+region = Rect2(0, 80, 16, 16)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_v0604"]
 animations = [{
 "frames": [{
@@ -156,6 +160,14 @@ animations = [{
 "loop": true,
 "name": &"running",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2c3a")
+}],
+"loop": true,
+"name": &"wall_grabbing",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd176"]
@@ -181,7 +193,7 @@ texture = SubResource("AtlasTexture_gn86n")
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_v0604")
-animation = &"idle"
+animation = &"wall_grabbing"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
