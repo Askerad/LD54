@@ -19,9 +19,15 @@ script = ExtResource("2_ju7ym")
 position = Vector2(0, 280)
 JUMP_VELOCITY = -450.0
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+position = Vector2(0, -280)
+limit_left = 0
+limit_right = 1280
+limit_bottom = 720
+position_smoothing_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 0.5
 script = ExtResource("4_lpwh4")
-target = NodePath("../CharacterBody2D")
 
 [node name="WallManager" parent="." instance=ExtResource("5_epft5")]
 position = Vector2(0, 720)
