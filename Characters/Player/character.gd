@@ -1,5 +1,14 @@
 extends CharacterBody2D
 
+enum PlayerStates {
+	Running,
+	Jumping,
+	Falling,
+	Walljumping
+}
+
+
+
 @export var delay = 0.3
 @export var wall_delay = 0.3
 @export var SPEED = 300.0
@@ -14,32 +23,31 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var wall_grabbed = 0
 var wall_jumped = 0
 
-var Jump_buffer = null
-var wall_jump_timer = null
+@export var wall_jump_timer: Timer;
 var wall_stance_timer = null
+var state: PlayerStates = PlayerStates.Running;
+@onready var minimum_jump_timer = $MinimumJumpTimer
+@onready var jump_buffer = $JumpBufferTimer
+@onready var wj_ray_right = $WJRayRight
+@onready var wj_ray_left = $WJRayLeft
 
 func _ready():
-	#set timers for the functions
-	Jump_buffer = Timer.new()
-	Jump_buffer.one_shot = true
-	Jump_buffer.wait_time = delay
-	add_child(Jump_buffer)
-	
+
 	wall_stance_timer = Timer.new()
 	wall_stance_timer.one_shot = true
 	wall_stance_timer.wait_time= wall_delay
 	add_child(wall_stance_timer)
 
-	wall_jump_timer = Timer.new()
-	wall_jump_timer.one_shot = true
-	wall_jump_timer.wait_time= wall_jump_delay
-	add_child(wall_jump_timer)
+#	wall_jump_timer = Timer.new()
+#	wall_jump_timer.one_shot = true
+#	wall_jump_timer.wait_time= wall_jump_delay
+#	add_child(wall_jump_timer)
 	
 func jump():
+		minimum_jump_timer.start();
 		velocity.y = JUMP_VELOCITY
-		#cut if jump button is released before max velocity
-		if !Input.is_action_pressed("ui_accept"):
-			jump_cut()
+		state = PlayerStates.Jumping
+	
 
 func wallgrab(direction):
 	if is_on_wall() and direction and !is_on_floor() and wall_grabbed == 0:
@@ -47,61 +55,91 @@ func wallgrab(direction):
 		wall_stance_timer.start()
 	if !wall_stance_timer.is_stopped():
 		velocity.y = 0
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("jump"):
 			wall_stance_timer.stop()
 			wall_jump(direction)
 		#print ("I touched da wall")	
 
 func wall_jump(direction):
+	print("walljump")
 	wall_jumped = 1
 	wall_jump_timer.start()
 	velocity.y = JUMP_VELOCITY
-	velocity.x = -direction * SPEED + (direction * -2000)
+	velocity.x = -direction * SPEED + (direction * -250)
 	
 
 func jump_cut():
-	Jump_buffer.stop()
+	jump_buffer.stop()
 	if velocity.y < -100:
 			velocity.y = -100
 
 func _physics_process(delta):
-	# Add the gravity.
+	var direction = Input.get_axis("left", "right")
+	print(state);
+
+	#Gravity Handling
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	else:
-		wall_grabbed = 0
+
+	if jump_buffer.time_left > 0 and is_on_floor():
+		state =  PlayerStates.Jumping
+		jump()
+
+	match state:
+		PlayerStates.Running: 
+			velocity.x = lerp(velocity.x, direction * SPEED, 0.15)
+			if Input.is_action_pressed("jump"):
+				if is_on_floor():
+					print("jump classique")
+					jump()
+			
+		PlayerStates.Jumping: 
+			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
+			
+			if velocity.y > 0:
+				print("FALLING")
+				jump_cut();
+				state = PlayerStates.Falling
+				
+			if not minimum_jump_timer.time_left and not Input.is_action_pressed("jump"):
+				print("CUT")
+				jump_cut();
+				state = PlayerStates.Falling
+				
+			if is_on_wall() and Input.is_action_just_pressed("jump"):
+				wall_jump_timer.start();
+				state = PlayerStates.Walljumping;
+				if wj_ray_left.is_colliding(): wall_jump(-1);
+				if wj_ray_right.is_colliding(): wall_jump(1);
+				
+			
+			if is_on_floor() and not jump_buffer.time_left: 
+				state = PlayerStates.Running
+			pass
+			
+		PlayerStates.Falling:
+			velocity.x = lerp(velocity.x, direction * SPEED, 0.05)
+			if Input.is_action_pressed("jump"):
+				jump_buffer.start()
+				
+			if is_on_wall() and Input.is_action_just_pressed("jump"):
+				wall_jump_timer.start();
+				state = PlayerStates.Walljumping;
+				if wj_ray_left.is_colliding(): wall_jump(-1);
+				if wj_ray_right.is_colliding(): wall_jump(1);	
+			
+			if is_on_floor() and not jump_buffer.time_left: 
+				state = PlayerStates.Running
 		
-	if Input.is_action_pressed("ui_accept"):
-		if is_on_floor():
-			#print("jump classique")
-			jump()
-		else:
-			#print("space in space")
-			Jump_buffer.start()
-	if is_on_floor():
-		if !Jump_buffer.is_stopped():
-			Jump_buffer.stop()
-			jump()
-	if Input.is_action_just_released("jump"):
-		jump_cut()
-	# Handle Jump.
+		PlayerStates.Walljumping:
+			if wall_jump_timer.is_stopped():
+				state = PlayerStates.Falling
+				
+			if is_on_floor() and not jump_buffer.time_left: 
+				state = PlayerStates.Running
+			
+			
 			
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("left", "right")
-	if direction and wall_jumped == 0:
-		wall_jumped = 1
-		velocity.x = lerp(velocity.x, direction * SPEED, 0.15)
-	else:
-		velocity.x = lerp(velocity.x, 0.0, 0.2)
-		
-	#will activate if player is in the air 
-	wallgrab(direction)	
-	if is_on_wall() and direction and !is_on_floor() and Input.is_action_just_pressed("ui_accept"):
-		wall_jump(direction)
-	
-	if wall_jump_timer.is_stopped:
-		wall_jumped = 0
-
 	move_and_slide()
+
