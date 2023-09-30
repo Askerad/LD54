@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cs857txywttq7"]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_ewje7"]
+[ext_resource type="Script" path="res://levels/LoadingManager.gd" id="2_ju7ym"]
+[ext_resource type="Script" path="res://levels/DebugController.gd" id="3_m3hmi"]
+[ext_resource type="Texture2D" uid="uid://cjfk6872xi5sx" path="res://assets/icon.svg" id="4_vo7m3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1vao"]
+radius = 15.0
+
+[node name="level" type="Node2D"]
+position = Vector2(618, 344)
+script = ExtResource("1_ewje7")
+
+[node name="LoadingManager" type="Node2D" parent="."]
+script = ExtResource("2_ju7ym")
+
+[node name="DebugController" type="CharacterBody2D" parent="."]
+script = ExtResource("3_m3hmi")
+speed = 250.0
+
+[node name="Sprite2D" type="Sprite2D" parent="DebugController"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_vo7m3")
+
+[node name="Camera2D" type="Camera2D" parent="DebugController"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugController"]
+shape = SubResource("CircleShape2D_y1vao")
