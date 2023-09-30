@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d18fwmx6upccw"]
+
+[ext_resource type="FontFile" uid="uid://dvn0jky26ws8p" path="res://assets/fonts/Kenney Rocket Square.ttf" id="1_fqwmr"]
+
+[resource]
+default_font = ExtResource("1_fqwmr")
+default_font_size = 40
