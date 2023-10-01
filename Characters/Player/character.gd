@@ -30,7 +30,7 @@ var can_dash = 1
 var wall_grabbed = 0
 var wall_jumped = 0
 
-@export var wall_jump_timer: Timer;
+@onready var wall_jump_timer = $WallJumpTimer
 var wall_stance_timer = null
 var state: PlayerStates = PlayerStates.Running;
 @onready var minimum_jump_timer = $MinimumJumpTimer
@@ -93,6 +93,7 @@ func jump_cut():
 	jump_buffer.stop()
 	if velocity.y < -100:
 			velocity.y = -100
+	
 
 func _physics_process(delta):
 	
@@ -196,8 +197,10 @@ func _physics_process(delta):
 				_animatedSprite.play("falling")
 			
 			if Input.is_action_pressed("jump"):
-				if coyote_timer.time_left > 0:
+				if coyote_timer.time_left > 0 and !is_on_wall():
 					jump();
+				elif coyote_timer.time_left > 0 and is_on_wall():
+					wall_jump(direction)
 				else:
 					jump_buffer.start()
 				

@@ -176,12 +176,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_cavan"]
 radius = 14.5086
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("wall_jump_timer")]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(0, -16)
 script = ExtResource("1_6dwht")
-SPEED = 400.0
-JUMP_VELOCITY = -450.0
-wall_jump_timer = NodePath("WallJumpTimer")
 metadata/_edit_group_ = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
