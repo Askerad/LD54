@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< Updated upstream
 uid="uid://bl5nl2upt2xj5"
+=======
+uid="uid://cjsnsfpo6c6d1"
+>>>>>>> Stashed changes
 path="res://.godot/imported/Game_Over_Screen.png-59b0ee620f2f89c707e568efb345cb27.ctex"
 metadata={
 "vram_texture": false
