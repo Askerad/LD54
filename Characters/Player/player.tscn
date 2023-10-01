@@ -238,6 +238,7 @@ collision_mask = 2
 
 [node name="JumpSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_dh1aw")
+volume_db = -3.006
 
 [node name="DashSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_gkq3l")

@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://levels/Label.gd" id="6_50hv7"]
 [ext_resource type="Script" path="res://levels/ScoreManager.gd" id="7_vqgtj"]
 [ext_resource type="FontFile" uid="uid://dvn0jky26ws8p" path="res://assets/fonts/Kenney Rocket Square.ttf" id="9_dy05l"]
-[ext_resource type="Texture2D" uid="uid://cjsnsfpo6c6d1" path="res://assets/ui/Splashscreen/Game_Over_Screen.png" id="9_hgcws"]
+[ext_resource type="Texture2D" uid="uid://bji2wbllx6gyu" path="res://assets/ui/Splashscreen/Game_Over_Screen.png" id="9_hgcws"]
 [ext_resource type="Texture2D" uid="uid://bksaw334o77tq" path="res://assets/vfx/fondnoir.png" id="9_r6mpr"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_at30f"]
@@ -29,15 +29,16 @@ process_mode = 1
 position = Vector2(0, 360)
 script = ExtResource("2_ju7ym")
 
-[node name="WallManager" parent="." instance=ExtResource("5_epft5")]
+[node name="WallManager" parent="." node_paths=PackedStringArray("character") instance=ExtResource("5_epft5")]
 process_mode = 1
-position = Vector2(-224, 800)
-rotation = 1.88146
 speed = 25.0
+character = NodePath("../CharacterBody2D")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_fxhom")]
 process_mode = 1
-position = Vector2(0, 280)
+position = Vector2(0, 272)
+SPEED = 400.0
+JUMP_VELOCITY = -450.0
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 position = Vector2(0, -280)

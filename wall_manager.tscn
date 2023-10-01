@@ -1,16 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://pffdk3w3fuyk"]
+[gd_scene load_steps=7 format=3 uid="uid://pffdk3w3fuyk"]
 
 [ext_resource type="Script" path="res://levels/WallManager.gd" id="1_xyimt"]
 [ext_resource type="Texture2D" uid="uid://bwbj60ugn1vko" path="res://assets/dev/wall/wall.png" id="2_tfx4y"]
 [ext_resource type="AudioStream" uid="uid://bmehngb2un6f1" path="res://assets/sfx/rune.wav" id="3_a2sk4"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dvvce"]
-normal = Vector2(-1, 0)
+[ext_resource type="Script" path="res://CollisionManager.gd" id="4_75r1k"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_da4fg"]
 normal = Vector2(1, 0)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dvvce"]
+normal = Vector2(-1, 0)
+
 [node name="WallManager" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_xyimt")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -18,32 +20,42 @@ layer = 100
 scroll_base_offset = Vector2(640, 0)
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(0, 720)
+motion_mirroring = Vector2(0, 1440)
 
 [node name="Wall Right" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(384, 360)
+texture_filter = 1
+position = Vector2(1280, 360)
+scale = Vector2(2, 2)
 texture = ExtResource("2_tfx4y")
 offset = Vector2(320, 0)
 flip_h = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ParallaxBackground/ParallaxLayer/Wall Right"]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/ParallaxLayer/Wall Right/StaticBody2D"]
-shape = SubResource("WorldBoundaryShape2D_dvvce")
-
 [node name="Wall Left" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(-239, 360)
+texture_filter = 1
+position = Vector2(0, 360)
+scale = Vector2(2, 2)
 texture = ExtResource("2_tfx4y")
 offset = Vector2(-320, 0)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ParallaxBackground/ParallaxLayer/Wall Left"]
+[node name="RuneSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_a2sk4")
+
+[node name="CollisionManager" type="Node2D" parent="."]
+script = ExtResource("4_75r1k")
+
+[node name="LeftWall" type="StaticBody2D" parent="CollisionManager"]
+position = Vector2(0, 360)
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/ParallaxLayer/Wall Left/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionManager/LeftWall"]
 shape = SubResource("WorldBoundaryShape2D_da4fg")
 
-[node name="RuneSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_a2sk4")
+[node name="RightWall" type="StaticBody2D" parent="CollisionManager"]
+process_mode = 3
+position = Vector2(1280, 360)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionManager/RightWall"]
+shape = SubResource("WorldBoundaryShape2D_dvvce")

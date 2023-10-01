@@ -5,12 +5,19 @@ class_name WallManager
 @export var speed: float = 50;
 @onready var rune_sfx = $RuneSFX
 
+@export var character: CharacterBody2D;
+@onready var collision_manager = $CollisionManager
+@onready var camera_2d = $"../CharacterBody2D/Camera2D"
+
+
 var actual_espacement: float;
 
 func _ready():
 	actual_espacement = espacement;
 	
+	
 func get_rune():
+	camera_2d.strength = 2;
 	espacement += 150;
 	rune_sfx.play();
 	
