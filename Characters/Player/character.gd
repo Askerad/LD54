@@ -224,6 +224,7 @@ func _physics_process(delta):
 				dashing(direction)
 		
 		PlayerStates.Walljumping:
+			Input.action_release("jump")
 			$GPUParticles2D.emitting = false;
 			if wall_jump_timer.is_stopped():
 				state = PlayerStates.Falling
