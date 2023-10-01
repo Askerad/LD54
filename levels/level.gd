@@ -7,10 +7,8 @@ extends Node2D
 @onready var music = $AudioStreamPlayer
 @onready var game_over_drone = $GameOverDrone
 
-
 func _on_restart_button_pressed():
 	get_tree().reload_current_scene()
-
 
 func _on_played_died():
 	fondnoir.visible = true;
