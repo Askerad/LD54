@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cs857txywttq7"]
+[gd_scene load_steps=19 format=3 uid="uid://cs857txywttq7"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_ewje7"]
 [ext_resource type="Script" path="res://levels/LoadingManager.gd" id="2_ju7ym"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bji2wbllx6gyu" path="res://assets/ui/Splashscreen/Game_Over_Screen.png" id="9_hgcws"]
 [ext_resource type="Texture2D" uid="uid://bksaw334o77tq" path="res://assets/vfx/fondnoir.png" id="9_r6mpr"]
 [ext_resource type="AudioStream" uid="uid://8d5qpsb3sbxi" path="res://assets/music/Claustrorush.wav" id="12_xfo5m"]
+[ext_resource type="AudioStream" uid="uid://dbgrmfhcpx6cj" path="res://assets/music/Menu.wav" id="14_hcn5o"]
 [ext_resource type="Texture2D" uid="uid://dmavr3ye4jllp" path="res://BG/big_parallax.png" id="14_i1pu3"]
 [ext_resource type="Texture2D" uid="uid://dbphjkwki8o45" path="res://BG/pillars_parallax.png" id="14_ru8c3"]
 [ext_resource type="Texture2D" uid="uid://5e4wogqupxya" path="res://assets/Pano.png" id="15_jtf7a"]
@@ -118,6 +119,10 @@ player = NodePath("../CharacterBody2D")
 stream = ExtResource("12_xfo5m")
 volume_db = -5.0
 autoplay = true
+
+[node name="GameOverDrone" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_hcn5o")
+volume_db = -5.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

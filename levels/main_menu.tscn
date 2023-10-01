@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmncm805oy160"]
+[gd_scene load_steps=7 format=3 uid="uid://ur4gei78rcen"]
 
 [ext_resource type="Texture2D" uid="uid://bw4m4fwitsmb1" path="res://assets/ui/Splashscreen/Title_Screen.png" id="1_08d1s"]
 [ext_resource type="Script" path="res://levels/main_menu.gd" id="1_r434x"]
 [ext_resource type="Theme" uid="uid://d18fwmx6upccw" path="res://UITheme.tres" id="2_nxyb1"]
+[ext_resource type="AudioStream" uid="uid://dbgrmfhcpx6cj" path="res://assets/music/Menu.wav" id="4_wdiad"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_hlumn"]
 action = &"jump"
@@ -36,6 +37,11 @@ offset_top = 43.0
 offset_right = 735.0
 offset_bottom = 56.0
 shortcut = SubResource("Shortcut_5bvan")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_wdiad")
+volume_db = -5.0
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
