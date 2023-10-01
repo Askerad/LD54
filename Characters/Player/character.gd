@@ -17,6 +17,8 @@ signal player_died
 @export var wall_jump_delay = 2
 #var _airtime: float = 0.0
 
+var is_dead: bool = false;
+
 #var for including the animated sprite
 @onready var _animatedSprite = $AnimatedSprite2D
 
@@ -40,6 +42,8 @@ var state: PlayerStates = PlayerStates.Running;
 @onready var death_ray_left = $DeathRayLeft
 @onready var jump_sfx = $JumpSFX
 @onready var dash_sfx = $DashSFX
+@onready var coyote_timer = $CoyoteTimer
+@onready var cronch_sfx = $CronchSFX
 
 func _ready():
 
@@ -91,9 +95,13 @@ func jump_cut():
 			velocity.y = -100
 
 func _physics_process(delta):
+	
+	
 	if death_ray_left.is_colliding() and death_ray_right.is_colliding(): 
-		print("DEAD")
-		emit_signal("player_died")
+		if not is_dead:
+			is_dead = true;
+			cronch_sfx.play();
+			emit_signal("player_died")
 	
 	
 	var direction = Input.get_axis("left", "right")
@@ -110,7 +118,6 @@ func _physics_process(delta):
 		PlayerStates.Running: 
 			if can_dash == 0:
 				can_dash = 1
-			print(_animatedSprite.is_flipped_h())
 			if direction:
 				$GPUParticles2D.emitting = true;
 				_animatedSprite.play("running")
@@ -127,11 +134,13 @@ func _physics_process(delta):
 				velocity.x = lerp(velocity.x, 0.0, 0.2)
 			if Input.is_action_pressed("jump"):
 				if is_on_floor():
-					#print("jump classique")
 					jump()
 			if Input.is_action_just_pressed("dash") and can_dash == 1:
 				can_dash = 0
 				dashing(direction)
+			if not is_on_floor():
+				coyote_timer.start()
+				state = PlayerStates.Falling
 			
 		PlayerStates.Jumping:
 			$GPUParticles2D.emitting = false;
@@ -152,8 +161,12 @@ func _physics_process(delta):
 				#print("CUT")
 				jump_cut();
 				state = PlayerStates.Falling
+			
+			if is_on_wall():
+				coyote_timer.start()
 				
-			if is_on_wall() and Input.is_action_just_pressed("jump"):
+			if coyote_timer.time_left > 0 and Input.is_action_just_pressed("jump"):
+				print("Coyote!")
 				_animatedSprite.flip_h = true
 				wall_jump_timer.start();
 				state = PlayerStates.Walljumping;
@@ -183,9 +196,16 @@ func _physics_process(delta):
 				_animatedSprite.play("falling")
 			
 			if Input.is_action_pressed("jump"):
-				jump_buffer.start()
+				if coyote_timer.time_left > 0:
+					jump();
+				else:
+					jump_buffer.start()
 				
-			if is_on_wall() and Input.is_action_just_pressed("jump"):
+			if is_on_wall():
+				coyote_timer.start()
+				
+			if coyote_timer.time_left > 0 and Input.is_action_just_pressed("jump"):
+				print("Coyote!")
 				wall_jump_timer.start();
 				state = PlayerStates.Walljumping;
 				if wj_ray_left.is_colliding(): wall_jump(-1);
@@ -211,8 +231,7 @@ func _physics_process(delta):
 				velocity.x = -1000
 			else:
 				velocity.x = 1000
-			print(velocity.x)
-			print (dash_time.time_left)
+			
 			if dash_time.is_stopped() and is_on_floor():
 				can_dash = 1
 				state = PlayerStates.Running
@@ -222,3 +241,11 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	if not is_dead:
+			is_dead = true;
+			cronch_sfx.play();
+			emit_signal("player_died")
+	pass # Replace with function body.

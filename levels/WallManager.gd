@@ -14,7 +14,6 @@ func get_rune():
 	espacement += 150;
 	rune_sfx.play();
 	
-	
 func _process(delta):
 	
 	espacement -= delta * speed;

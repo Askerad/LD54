@@ -1,10 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=28 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
 [ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
 [ext_resource type="Texture2D" uid="uid://dihijj02febsr" path="res://assets/vfx/sprint.png" id="2_3578t"]
 [ext_resource type="AudioStream" uid="uid://d04en2qnax2is" path="res://assets/sfx/jump.wav" id="4_dh1aw"]
 [ext_resource type="AudioStream" uid="uid://36paybuoawdb" path="res://assets/sfx/dash.wav" id="5_gkq3l"]
+[ext_resource type="AudioStream" uid="uid://dv6v6svyjfpss" path="res://assets/sfx/crunch.wav" id="6_jd47s"]
 
 [sub_resource type="Gradient" id="Gradient_78hxg"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -220,6 +221,10 @@ process_callback = 0
 wait_time = 0.1
 one_shot = true
 
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [node name="WJRayRight" type="RayCast2D" parent="."]
 target_position = Vector2(40, 0)
 
@@ -239,3 +244,10 @@ stream = ExtResource("4_dh1aw")
 
 [node name="DashSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_gkq3l")
+
+[node name="CronchSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jd47s")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
