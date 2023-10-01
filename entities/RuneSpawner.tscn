@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kcavmr511d2a"]
+
+[ext_resource type="Script" path="res://entities/RuneSpawner.gd" id="1_ixorn"]
+
+[node name="RuneSpawner" type="Node2D"]
+script = ExtResource("1_ixorn")

@@ -14,6 +14,7 @@ normal = Vector2(-1, 0)
 [node name="WallManager" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_xyimt")
+espacement = 1200.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 100

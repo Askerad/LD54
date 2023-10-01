@@ -1,18 +1,24 @@
 extends Node2D
 
 @export var loaded_levels_count: int = 10;
-
+var starter_level = preload("res://levels/parts/Start.tscn");
 var parts : Array[PackedScene] = [
 	preload("res://levels/parts/part1.tscn"),
 	preload("res://levels/parts/part2.tscn"),
 	preload("res://levels/parts/part3.tscn"),
 	preload("res://levels/parts/part4.tscn"),
+	preload("res://levels/parts/part5.tscn"),
+	preload("res://levels/parts/part6.tscn"),
+	preload("res://levels/parts/part7.tscn"),
 ];
 var rng = RandomNumberGenerator.new();
-
+var last_index: int = -1;
 var currently_loaded_parts: Array[Part];
 
 func _ready():
+	var start : Part = starter_level.instantiate();
+	currently_loaded_parts.push_front(start);
+	add_child(start);
 	for i in range(0, int(loaded_levels_count/2)):
 		load_next_level()
 		
@@ -50,5 +56,12 @@ func load_next_level():
 
 
 func pick_random_level_part():
-	var index = rng.randi_range(0, parts.size() - 1);
+	var index = rng.randi_range(0, parts.size() -1);
+	if index == last_index:
+		index = rng.randi_range(0, parts.size() -1);
+	if index == last_index:
+		index = rng.randi_range(0, parts.size() -1);
+	if index == last_index:
+		index = rng.randi_range(0, parts.size() -1);
+	last_index = index
 	return parts[index];

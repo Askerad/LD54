@@ -29,7 +29,7 @@ position = Vector2(640, 360)
 script = ExtResource("1_ewje7")
 
 [node name="Pano" type="Sprite2D" parent="."]
-position = Vector2(8, 64)
+position = Vector2(8, 134)
 texture = ExtResource("15_jtf7a")
 
 [node name="LoadingManager" type="Node2D" parent="."]
