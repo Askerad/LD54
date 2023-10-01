@@ -5,7 +5,8 @@ enum PlayerStates {
 	Jumping,
 	Falling,
 	Walljumping,
-	Dashing
+	Dashing,
+	Dead
 }
 
 signal player_died
@@ -104,6 +105,7 @@ func _physics_process(delta):
 		if not is_dead:
 			is_dead = true;
 			cronch_sfx.play();
+			state = PlayerStates.Dead
 			emit_signal("player_died")
 	
 	
@@ -238,7 +240,10 @@ func _physics_process(delta):
 				state = PlayerStates.Running
 			if dash_time.is_stopped() and !is_on_floor():
 				state = PlayerStates.Falling
-			
+		
+		PlayerStates.Dead:
+			velocity.x = 0
+			velocity.y = 0
 
 	move_and_slide()
 
@@ -248,5 +253,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	if not is_dead:
 			is_dead = true;
 			cronch_sfx.play();
+			state = PlayerStates.Dead
 			emit_signal("player_died")
 	pass # Replace with function body.
