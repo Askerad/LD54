@@ -10,9 +10,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(label_time.time_left)
-	if label_time.timeout:
+	#print(label_time.time_left)
+	if label_time.is_stopped():
+		print ("timeout")
 		if !$title.visible:
 			$title.visible = true
 		else:
 			$title.visible = false
+		label_time.start()
+
+
+
+func _on_button_pressed():
+	print("button pressed")
+	get_tree().change_scene_to_file("res://levels/level.tscn")
