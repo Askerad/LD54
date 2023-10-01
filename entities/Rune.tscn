@@ -25,7 +25,7 @@ orbit_velocity_max = 0.0
 scale_min = 0.2
 scale_max = 0.25
 scale_curve = SubResource("CurveTexture_n0ill")
-color = Color(1, 0.968627, 0.435294, 0.101961)
+color = Color(1, 0.968627, 0.435294, 0.556863)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_70n2u"]
 radius = 14.0357

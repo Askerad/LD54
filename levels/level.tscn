@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cs857txywttq7"]
+[gd_scene load_steps=18 format=3 uid="uid://cs857txywttq7"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_ewje7"]
 [ext_resource type="Script" path="res://levels/LoadingManager.gd" id="2_ju7ym"]
@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://bji2wbllx6gyu" path="res://assets/ui/Splashscreen/Game_Over_Screen.png" id="9_hgcws"]
 [ext_resource type="Texture2D" uid="uid://bksaw334o77tq" path="res://assets/vfx/fondnoir.png" id="9_r6mpr"]
 [ext_resource type="AudioStream" uid="uid://8d5qpsb3sbxi" path="res://assets/music/Claustrorush.wav" id="12_xfo5m"]
+[ext_resource type="Texture2D" uid="uid://dmavr3ye4jllp" path="res://BG/big_parallax.png" id="14_i1pu3"]
+[ext_resource type="Texture2D" uid="uid://dbphjkwki8o45" path="res://BG/pillars_parallax.png" id="14_ru8c3"]
+[ext_resource type="Texture2D" uid="uid://5e4wogqupxya" path="res://assets/Pano.png" id="15_jtf7a"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_at30f"]
 action = &"jump"
@@ -24,6 +27,10 @@ process_mode = 3
 texture_filter = 1
 position = Vector2(640, 360)
 script = ExtResource("1_ewje7")
+
+[node name="Pano" type="Sprite2D" parent="."]
+position = Vector2(8, 64)
+texture = ExtResource("15_jtf7a")
 
 [node name="LoadingManager" type="Node2D" parent="."]
 process_mode = 1
@@ -111,6 +118,30 @@ player = NodePath("../CharacterBody2D")
 stream = ExtResource("12_xfo5m")
 volume_db = -5.0
 autoplay = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0.25)
+motion_mirroring = Vector2(0, 1280)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(640, 352)
+texture = ExtResource("14_i1pu3")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(0, 720)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(642, 352)
+texture = ExtResource("14_ru8c3")
+
+[node name="Fondnoir2" type="Sprite2D" parent="ParallaxBackground"]
+modulate = Color(1, 1, 1, 0.443137)
+z_index = -1
+position = Vector2(640, 360)
+texture = ExtResource("9_r6mpr")
 
 [connection signal="player_died" from="CharacterBody2D" to="." method="_on_played_died"]
 [connection signal="pressed" from="CharacterBody2D/Camera2D/UiCanvas/GameOverScreen/Button" to="." method="_on_restart_button_pressed"]
