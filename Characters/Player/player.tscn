@@ -1,8 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://bwkepyp35k2f2"]
+[gd_scene load_steps=27 format=3 uid="uid://bwkepyp35k2f2"]
 
 [ext_resource type="Script" path="res://Characters/Player/character.gd" id="1_6dwht"]
 [ext_resource type="Texture2D" uid="uid://boun3oxu1kres" path="res://assets/sprites/player/spritesheet.png" id="2_2ceru"]
 [ext_resource type="Texture2D" uid="uid://dihijj02febsr" path="res://assets/vfx/sprint.png" id="2_3578t"]
+[ext_resource type="AudioStream" uid="uid://d04en2qnax2is" path="res://assets/sfx/jump.wav" id="4_dh1aw"]
+[ext_resource type="AudioStream" uid="uid://36paybuoawdb" path="res://assets/sfx/dash.wav" id="5_gkq3l"]
 
 [sub_resource type="Gradient" id="Gradient_78hxg"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -231,3 +233,9 @@ collision_mask = 2
 [node name="DeathRayLeft" type="RayCast2D" parent="."]
 target_position = Vector2(-16, 0)
 collision_mask = 2
+
+[node name="JumpSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_dh1aw")
+
+[node name="DashSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_gkq3l")

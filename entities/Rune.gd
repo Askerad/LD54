@@ -20,7 +20,7 @@ func _on_rune_body_entered(body):
 		print("Rune Consumed")
 		self.queue_free()
 		var wallManager : Node2D = get_parent().get_parent().get_parent().find_child("WallManager");
-		wallManager.espacement += effect_size;
+		wallManager.get_rune();
 	
 	
 	pass # Replace with function body.

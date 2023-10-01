@@ -38,6 +38,8 @@ var state: PlayerStates = PlayerStates.Running;
 @onready var wj_ray_left = $WJRayLeft
 @onready var death_ray_right = $DeathRayRight
 @onready var death_ray_left = $DeathRayLeft
+@onready var jump_sfx = $JumpSFX
+@onready var dash_sfx = $DashSFX
 
 func _ready():
 
@@ -52,10 +54,12 @@ func _ready():
 #	add_child(wall_jump_timer)
 
 func dashing(direction):
+	dash_sfx.play();
 	dash_time.start()
 	state = PlayerStates.Dashing
 	
 func jump():
+		jump_sfx.play();
 		minimum_jump_timer.start();
 		velocity.y = JUMP_VELOCITY
 		state = PlayerStates.Jumping
@@ -73,6 +77,7 @@ func wallgrab(direction):
 		#print ("I touched da wall")	
 
 func wall_jump(direction):
+	jump_sfx.play();
 	wall_jumped = 1
 	wall_jump_timer.start()
 	velocity.y = JUMP_VELOCITY

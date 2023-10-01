@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b51gr88p8b0sl"]
 
 [ext_resource type="Script" path="res://entities/Rune.gd" id="1_cc0nw"]
-[ext_resource type="Texture2D" path="res://assets/sprites/items/rune.png" id="2_ek7ou"]
+[ext_resource type="Texture2D" uid="uid://cmhpbvvvum3r3" path="res://assets/sprites/items/rune.png" id="2_ek7ou"]
 [ext_resource type="Texture2D" uid="uid://1vxunqg7uds8" path="res://assets/vfx/shine.png" id="2_lmmm2"]
 [ext_resource type="Texture2D" uid="uid://bbol7q0160jxx" path="res://assets/vfx/Glow+Shine.png" id="3_6siud"]
 

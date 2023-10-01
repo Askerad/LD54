@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://pffdk3w3fuyk"]
+[gd_scene load_steps=6 format=3 uid="uid://pffdk3w3fuyk"]
 
 [ext_resource type="Script" path="res://levels/WallManager.gd" id="1_xyimt"]
 [ext_resource type="Texture2D" uid="uid://bwbj60ugn1vko" path="res://assets/dev/wall/wall.png" id="2_tfx4y"]
+[ext_resource type="AudioStream" uid="uid://bmehngb2un6f1" path="res://assets/sfx/rune.wav" id="3_a2sk4"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dvvce"]
 normal = Vector2(-1, 0)
@@ -43,3 +44,6 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/ParallaxLayer/Wall Left/StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_da4fg")
+
+[node name="RuneSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_a2sk4")
