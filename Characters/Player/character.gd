@@ -20,6 +20,7 @@ signal player_died
 
 var is_dead: bool = false;
 
+
 #var for including the animated sprite
 @onready var _animatedSprite = $AnimatedSprite2D
 
@@ -27,6 +28,7 @@ var is_dead: bool = false;
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var can_dash = 1
+
 
 var wall_grabbed = 0
 var wall_jumped = 0
@@ -94,6 +96,7 @@ func wall_jump(direction):
 func jump_cut():
 	#_animatedSprite.play("fall_stable")
 	jump_buffer.stop()
+	Input.action_release("jump")
 	if velocity.y < -100:
 			velocity.y = -100
 	
